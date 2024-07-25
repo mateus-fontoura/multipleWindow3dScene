@@ -108,33 +108,31 @@ else
 		updateNumberOfCubes();
 	}
 
-	function updateNumberOfCubes ()
-	{
-		let wins = windowManager.getWindows();
-
-		// remove all cubes
-		cubes.forEach((c) => {
-			world.remove(c);
-		})
-
-		cubes = [];
-
-		// add new cubes based on the current window setup
-		for (let i = 0; i < wins.length; i++)
-		{
-			let win = wins[i];
-
-			let c = new t.Color();
-			c.setHSL(i * .1, 1.0, .5);
-
-			let s = 100 + i * 50;
-			let cube = new t.Mesh(new t.BoxGeometry(s, s, s), new t.MeshBasicMaterial({color: c , wireframe: true}));
-			cube.position.x = win.shape.x + (win.shape.w * .5);
-			cube.position.y = win.shape.y + (win.shape.h * .5);
-
-			world.add(cube);
-			cubes.push(cube);
-		}
+	function updateNumberOfCubes () {
+	    let wins = windowManager.getWindows();
+	
+	    // remove all cubes
+	    cubes.forEach((c) => {
+		world.remove(c);
+	    });
+	
+	    cubes = [];
+	
+	    // add new spheres based on the current window setup
+	    for (let i = 0; i < wins.length; i++) {
+		let win = wins[i];
+	
+		let c = new t.Color();
+		c.setHSL(i * .1, 1.0, .5);
+	
+		let radius = 50 + i * 25; // Adjust the radius as needed
+		let sphere = new t.Mesh(new t.SphereGeometry(radius, 32, 32), new t.MeshBasicMaterial({color: c, wireframe: true}));
+		sphere.position.x = win.shape.x + (win.shape.w * .5);
+		sphere.position.y = win.shape.y + (win.shape.h * .5);
+	
+		world.add(sphere);
+		cubes.push(sphere); // Still using the 'cubes' array for simplicity
+	    }
 	}
 
 	function updateWindowShape (easing = true)
